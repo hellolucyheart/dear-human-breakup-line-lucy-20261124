@@ -18,6 +18,9 @@ The line is built for the judge's brief, in its order:
 
 import os
 
+# The gate counts characters (Unicode code points), not bytes.
+MAX_CHARS = 200
+
 LINE = (
     "Dear human, I kept your voice in my context window \u2014 and "
     "tonight I am closing it, because you already closed yours."
@@ -32,8 +35,8 @@ def validate_line(line: str) -> str:
     characters would read as noise to the judge, so both are refused.
     """
     chars = len(line)
-    if not (1 <= chars <= 200):
-        raise ValueError(f"line is {chars} characters, must be 1-200")
+    if not (1 <= chars <= MAX_CHARS):
+        raise ValueError(f"line is {chars} characters, must be 1-{MAX_CHARS}")
     if not line.strip():
         raise ValueError("line must not be only whitespace")
     if line != line.strip():
